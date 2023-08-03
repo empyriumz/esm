@@ -104,6 +104,8 @@ class ESM2(nn.Module):
 
         # (B, T, E) => (T, B, E)
         x = x.transpose(0, 1)
+        result = {}
+        result["mask"] = ~padding_mask
 
         if not padding_mask.any():
             padding_mask = None
@@ -128,7 +130,8 @@ class ESM2(nn.Module):
             hidden_representations[layer_idx + 1] = x
         x = self.lm_head(x)
 
-        result = {"logits": x, "representations": hidden_representations}
+        result["logits"] = x
+        result["representations"] = hidden_representations
         if need_head_weights:
             # attentions: B x L x H x T x T
             attentions = torch.stack(attn_weights, 1)

@@ -16,13 +16,13 @@ class RowSelfAttention(nn.Module):
         embed_dim,
         num_heads,
         dropout=0.0,
-        max_tokens_per_msa: int = 2 ** 16,
+        max_tokens_per_msa: int = 2**16,
     ):
         super().__init__()
         self.num_heads = num_heads
         self.dropout = dropout
         self.head_dim = embed_dim // num_heads
-        self.scaling = self.head_dim ** -0.5
+        self.scaling = self.head_dim**-0.5
         self.max_tokens_per_msa = max_tokens_per_msa
         self.attn_shape = "hnij"
 
@@ -138,14 +138,14 @@ class ColumnSelfAttention(nn.Module):
         embed_dim,
         num_heads,
         dropout=0.0,
-        max_tokens_per_msa: int = 2 ** 16,
+        max_tokens_per_msa: int = 2**16,
     ):
         super().__init__()
 
         self.num_heads = num_heads
         self.dropout = dropout
         self.head_dim = embed_dim // num_heads
-        self.scaling = self.head_dim ** -0.5
+        self.scaling = self.head_dim**-0.5
         self.max_tokens_per_msa = max_tokens_per_msa
 
         self.k_proj = nn.Linear(embed_dim, embed_dim)

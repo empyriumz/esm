@@ -18,7 +18,12 @@ from esm.model.esm2 import ESM2
 def _has_regression_weights(model_name):
     """Return whether we expect / require regression weights;
     Right now that is all models except ESM-1v, ESM-IF, and partially trained ESM2 models"""
-    return not ("esm1v" in model_name or "esm_if" in model_name or "270K" in model_name or "500K" in model_name)
+    return not (
+        "esm1v" in model_name
+        or "esm_if" in model_name
+        or "270K" in model_name
+        or "500K" in model_name
+    )
 
 
 def load_model_and_alphabet(model_name):
@@ -101,7 +106,6 @@ def _load_model_and_alphabet_core_v1(model_data):
         model_type = esm.ProteinBertModel
 
     elif model_data["args"].arch == "protein_bert_base":
-
         # upgrade state dict
         pra = lambda s: "".join(s.split("decoder_")[1:] if "decoder" in s else s)
         prs = lambda s: "".join(s.split("decoder.")[1:] if "decoder" in s else s)
@@ -109,7 +113,6 @@ def _load_model_and_alphabet_core_v1(model_data):
         model_state = {prs(arg[0]): arg[1] for arg in model_data["model"].items()}
         model_type = esm.ProteinBertModel
     elif model_data["args"].arch == "msa_transformer":
-
         # upgrade state dict
         pra = lambda s: "".join(s.split("encoder_")[1:] if "encoder" in s else s)
         prs1 = lambda s: "".join(s.split("encoder.")[1:] if "encoder" in s else s)
@@ -400,11 +403,12 @@ def esm2_t48_15B_UR50D():
 def esmfold_v0():
     """
     ESMFold v0 model with 3B ESM-2, 48 folding blocks.
-    This version was used for the paper (Lin et al, 2022). It was trained 
+    This version was used for the paper (Lin et al, 2022). It was trained
     on all PDB chains until 2020-05, to ensure temporal holdout with CASP14
     and the CAMEO validation and test set reported there.
     """
     import esm.esmfold.v1.pretrained
+
     return esm.esmfold.v1.pretrained.esmfold_v0()
 
 
@@ -417,7 +421,9 @@ def esmfold_v1():
     protein sequence.
     """
     import esm.esmfold.v1.pretrained
+
     return esm.esmfold.v1.pretrained.esmfold_v1()
+
 
 def esmfold_structure_module_only_8M():
     """
@@ -428,6 +434,7 @@ def esmfold_structure_module_only_8M():
     See table S1 in (Lin et al, 2022).
     """
     import esm.esmfold.v1.pretrained
+
     return esm.esmfold.v1.pretrained.esmfold_structure_module_only_8M()
 
 
@@ -440,6 +447,7 @@ def esmfold_structure_module_only_8M_270K():
     See table S1 in (Lin et al, 2022).
     """
     import esm.esmfold.v1.pretrained
+
     return esm.esmfold.v1.pretrained.esmfold_structure_module_only_8M_270K()
 
 
@@ -452,6 +460,7 @@ def esmfold_structure_module_only_35M():
     See table S1 in (Lin et al, 2022).
     """
     import esm.esmfold.v1.pretrained
+
     return esm.esmfold.v1.pretrained.esmfold_structure_module_only_35M()
 
 
@@ -464,6 +473,7 @@ def esmfold_structure_module_only_35M_270K():
     See table S1 in (Lin et al, 2022).
     """
     import esm.esmfold.v1.pretrained
+
     return esm.esmfold.v1.pretrained.esmfold_structure_module_only_35M_270K()
 
 
@@ -476,6 +486,7 @@ def esmfold_structure_module_only_150M():
     See table S1 in (Lin et al, 2022).
     """
     import esm.esmfold.v1.pretrained
+
     return esm.esmfold.v1.pretrained.esmfold_structure_module_only_150M()
 
 
@@ -488,6 +499,7 @@ def esmfold_structure_module_only_150M_270K():
     See table S1 in (Lin et al, 2022).
     """
     import esm.esmfold.v1.pretrained
+
     return esm.esmfold.v1.pretrained.esmfold_structure_module_only_150M_270K()
 
 
@@ -500,6 +512,7 @@ def esmfold_structure_module_only_650M():
     See table S1 in (Lin et al, 2022).
     """
     import esm.esmfold.v1.pretrained
+
     return esm.esmfold.v1.pretrained.esmfold_structure_module_only_650M()
 
 
@@ -512,6 +525,7 @@ def esmfold_structure_module_only_650M_270K():
     See table S1 in (Lin et al, 2022).
     """
     import esm.esmfold.v1.pretrained
+
     return esm.esmfold.v1.pretrained.esmfold_structure_module_only_650M_270K()
 
 
@@ -524,6 +538,7 @@ def esmfold_structure_module_only_3B():
     See table S1 in (Lin et al, 2022).
     """
     import esm.esmfold.v1.pretrained
+
     return esm.esmfold.v1.pretrained.esmfold_structure_module_only_3B()
 
 
@@ -536,6 +551,7 @@ def esmfold_structure_module_only_3B_270K():
     See table S1 in (Lin et al, 2022).
     """
     import esm.esmfold.v1.pretrained
+
     return esm.esmfold.v1.pretrained.esmfold_structure_module_only_3B_270K()
 
 
@@ -549,4 +565,5 @@ def esmfold_structure_module_only_15B():
     See table S1 in (Lin et al, 2022).
     """
     import esm.esmfold.v1.pretrained
+
     return esm.esmfold.v1.pretrained.esmfold_structure_module_only_15B()
